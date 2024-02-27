@@ -2,6 +2,7 @@
 using CHUSHKA.Data.Model;
 using Microsoft.AspNetCore.Mvc;
 using CHUSHKA.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CHUSHKA.Controllers
 {
@@ -15,33 +16,64 @@ namespace CHUSHKA.Controllers
             this.db = db;
             this.webHostEnvironment = webHostEnvironment;
         }
-        public IActionResult Index()
+        public IActionResult AdminHome()
         {
-            var model = new ProductViewModel();
-
-            return View(model);
+            return View();
         }
         
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult CreateAdmin()
         {
             var model = new ProductViewModel();
             return View(model);
         }
+        [Authorize]
         [HttpPost]
-        public IActionResult Create(ProductViewModel model)
+        public IActionResult CreateAdmin(ProductViewModel model)
         {
             var product = new Product
             {
+                Description = model.Description,
                 Name = model.Name,
                 Price = model.Price,
-                Description = model.Description,
                 ProductType = model.ProductType,
             };
+
             db.Products.Add(product);
             db.SaveChanges();
-            return View(model);
+
+            return this.RedirectToAction("AdminHome");
+        }
+        public IActionResult ProductDetailsAdmin(int id)
+        {
+            var model = db.Products.Where(x => id == x.Id).Select(x => new ProductViewModel
+            {
+                Name = x.Name,
+                Description = x.Description,
+                Price = x.Price,
+                ProductType = x.ProductType
+            }).FirstOrDefault();
+            return this.View(model);
         }
 
+        public IActionResult DeleteProductAdmin(int id) 
+        {
+            var model = db.Products.Where(x => id == x.Id).Select(x=>new ProductViewModel
+            {
+                Name = x.Name,
+                Description = x.Description,
+                Price = x.Price,
+                ProductType = x.ProductType 
+            }).FirstOrDefault();
+            return this.View(model);
+        }
+        public IActionResult DeleteButton(int id)
+        {
+            var product = db.Products.Where(s => s.Id == id).FirstOrDefault(); 
+            db.Products.Remove(product);
+            db.SaveChanges();
+            return this.RedirectToAction("AdminHome");
+        }
     }
+     
 }

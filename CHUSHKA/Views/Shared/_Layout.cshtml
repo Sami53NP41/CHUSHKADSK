@@ -10,24 +10,29 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm chushka-bg-color  border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CHUSHKA</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
+        <nav class="navbar navbar-expand-lg chushka-bg-color">
+            <a class="navbar-brand nav-link-white" href="/">CHUSHKA</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
+                <ul class="navbar-nav right-side">
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-white" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-white" href="/products/create">Create Product</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-white" href="/orders/all">All Orders</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav left-side">
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-white" href="/logout">Logout</a>
+                    </li>
+                </ul>
             </div>
         </nav>
     </header>

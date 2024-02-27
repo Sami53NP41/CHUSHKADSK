@@ -7,5 +7,7 @@
         public double Price { get; set; }
         public string Description { get; set; }
         public int ProductType { get; set; }
+        public string[] ProductTypes = new string[] { "Food", "Domestic", "Health", 
+            "Cosmetic", "Other" };
     }
 }
