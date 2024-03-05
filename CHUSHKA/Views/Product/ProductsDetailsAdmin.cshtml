@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model ProductListViewModel
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,56 +10,36 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
+<form>
 <body>
 <div class="container-fluid">
-    <header>
-        <nav class="navbar navbar-expand-lg chushka-bg-color">
-            <a class="navbar-brand nav-link-white" href="/">CHUSHKA</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
-                <ul class="navbar-nav right-side">
-                    <li class="nav-item">
-                        <a class="nav-link nav-link-white" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-link-white" href="/products/create">Create Product</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-link-white" href="/orders/all">All Orders</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav left-side">
-                    <li class="nav-item">
-                        <a class="nav-link nav-link-white" href="/logout">Logout</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
     <main class="mt-3 mb-5">
-        <h1 class="text-center">Chushkopek</h1>
-        <hr class="hr-2 bg-dark"/>
-        <div class="product-type-holder half-width mx-auto d-flex justify-content-between">
-            <h3 class="text-center">Type: Domestic</h3>
-            <h3 class="text-center">Price: $500</h3>
+        @foreach (var item in @Model.Products )
+        {
+                    
+                
+         <label class="text-center" asp-for="@item.Name"></label>
+         <hr class="hr-2 bg-dark"/>
+         <div class="product-type-holder half-width mx-auto d-flex justify-content-between">
+                        <label class="text-center" asp-for="@item.ProductType"></label>
+                        <label class="text-center" asp-for="@item.Price"></label>
+         </div>
+         <hr class="hr-2 bg-dark"/>
+         <h3 class="text-center">Description</h3>
+         <div class="product-description-holder">
+            <label class="text-center mt-4" asp-for="@item.Description">
+                
+            </label>
         </div>
-        <hr class="hr-2 bg-dark"/>
-        <h3 class="text-center">Description</h3>
-        <div class="product-description-holder">
-            <p class="text-center mt-4">
-                A universal tool for peking chushkas.
-            </p>
-        </div>
+         }
         <hr class="hr-2 bg-dark"/>
         <h3 class="text-center">Actions</h3>
         <div class="product-action-holder mt-4 half-width mx-auto d-flex justify-content-around">
-            <a class="btn chushka-bg-color" href="/product/order/">Order</a>
-            <a class="btn chushka-bg-color" href="/product/edit/">Edit</a>
-            <a class="btn chushka-bg-color" href="/product/delete/">Delete</a>
+            <a class="btn chushka-bg-color" href="/Product/AllOrdersAdmin/">Order</a>
+            <a class="btn chushka-bg-color" href="/Product/EditAdmin/">Edit</a>
+            <a class="btn chushka-bg-color" href="/Product/DeleteProductAdmin/">Delete</a>
         </div>
+                
     </main>
     <footer>
         <div class="container-fluid chushka-bg-color">
@@ -69,4 +50,5 @@
     </footer>
 </div>
 </body>
+</form>
 </html>
