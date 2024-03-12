@@ -3,11 +3,13 @@ using CHUSHKA.Data.Model;
 using Microsoft.AspNetCore.Mvc;
 using CHUSHKA.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Cryptography;
 
 namespace CHUSHKA.Controllers
-{
+{ 
     public class ProductController : Controller
     {
+
         private ApplicationDbContext db;
         private IWebHostEnvironment webHostEnvironment;
 
@@ -16,19 +18,30 @@ namespace CHUSHKA.Controllers
             this.db = db;
             this.webHostEnvironment = webHostEnvironment;
         }
-        public IActionResult AdminHome() //Index
+        //[Authorize(Roles = "Administrator")]
+        public IActionResult AdminHome() //Index/ read
         {
-            return View();
+            var Products = db.Products.Select(d => new ProductViewModel
+            {
+                Id = d.Id,
+                Name = d.Name,
+                Description = d.Description,
+                Price = d.Price,
+            }).ToList();
+            
+            return View(Products);
+
         }
 
         [HttpGet]
+        //[Authorize(Roles = "Administrator")]
         public IActionResult CreateAdmin()//Create
         {
             var model = new ProductViewModel();
             return View(model);
         }
-        [Authorize]
-       
+        //[Authorize(Roles = "Administrator")]
+
         public IActionResult CreateAdmin(ProductViewModel model) //Create
         {
             var product = new Product
@@ -44,6 +57,7 @@ namespace CHUSHKA.Controllers
 
             return this.RedirectToAction("AdminHome");
         }
+        //[Authorize(Roles = "Administrator")]
         public IActionResult ProductDetailsAdmin(int id)
         {
             var model = db.Products.Where(x => id == x.Id).Select(x => new ProductViewModel
@@ -55,7 +69,7 @@ namespace CHUSHKA.Controllers
             }).FirstOrDefault();
             return this.View(model);
         }
-
+       // [Authorize(Roles = "Administrator")]
         public IActionResult DeleteProductAdmin(int id) //Delete product
         {
             var model = db.Products.Where(x => id == x.Id).Select(x => new ProductViewModel
@@ -74,29 +88,23 @@ namespace CHUSHKA.Controllers
             db.SaveChanges();
             return this.RedirectToAction("AdminHome");
         }
-        public IActionResult AllOrdersAdmin(OrderViewModel mdl) //All Orders
+        //[Authorize(Roles = "Administrator")]
+        public IActionResult AllOrdersAdmin() //All Orders
         {
-            var Products = db.Products.Select(d=>d)
-            var model = new ProductViewModel {
-                OrderID = mdl.Id,
-                OrderDTime = mdl.OrderOn
-            };
-            return View();
-        }
-        public IActionResult EditAdmin(int id) //Update
-        {
-            var product = db.Products.Where(x => x.Id == id).FirstOrDefault();
-            var model = new ProductViewModel
+            var Products = db.Orders.Select(d => new ProductViewModel
             {
-                Name = product.Name,
-                Description = product.Description,
-                Price = product.Price,
-                ProductType = product.ProductType
-            };
-            return this.View(model);
+                OrderID = d.Id,
+                OrderDTime = d.OrderOn,              
+            }).ToList();
+
+            return View(Products);
         }
+        //[Authorize(Roles = "Administrator")]
+
 
         [HttpPost]
+
+        //[Authorize(Roles = "Administrator")]
         public IActionResult EditAdmin(ProductViewModel model) //Update
         {
             var product = db.Products.Where(x => x.Id == model.Id).FirstOrDefault();
@@ -108,6 +116,7 @@ namespace CHUSHKA.Controllers
             return RedirectToAction("AdminHome");
         
         }
+
         
     }
      
