@@ -1,5 +1,5 @@
 ﻿@model ProductViewModel
-    <html lang="en">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -14,7 +14,7 @@
         <main class="mt-3 mb-5">
             <h1 class="text-center">Edit Product</h1>
             <hr class="hr-2 bg-dark" />
-            <form class="mx-auto half-width" method="post" >
+            <form class="mx-auto half-width" method="post">
 
                 <div class="form-group">
                     <label asp-for="Name">Name</label>
@@ -45,12 +45,10 @@
                 <hr class="hr-2 bg-dark half-width mt-4" />
                 <div class="button-holder mt-2 d-flex w-25 mx-auto justify-content-between">
                     <button type="submit" class="btn chushka-bg-color">Edit</button>
-
-                    <button type="submit" class="btn chushka-bg-color" >Cancel</button>
-                    
-                        <button type="submit" class="btn chushka-bg-color" asp-controller="Product" asp-action="DeleteButton" asp-route-id="@Model.Id">Delete</button>
-                    
+                    <button type="submit" class="btn chushka-bg-color" asp-controller="Product" asp-action="DeleteButton" asp-route-id="@Model.Id">Delete</button>
                 </div>
+
+
             </form>
         </main>
         <footer>

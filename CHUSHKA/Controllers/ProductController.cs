@@ -18,7 +18,6 @@ namespace CHUSHKA.Controllers
             this.db = db;
             this.webHostEnvironment = webHostEnvironment;
         }
-        //[Authorize(Roles = "Administrator")]
         public IActionResult AdminHome() //Index/ read
         {
             var Products = db.Products.Select(d => new ProductViewModel
@@ -34,13 +33,12 @@ namespace CHUSHKA.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = "Administrator")]
         public IActionResult CreateAdmin()//Create
         {
             var model = new ProductViewModel();
             return View(model);
         }
-        //[Authorize(Roles = "Administrator")]
+
 
         public IActionResult CreateAdmin(ProductViewModel model) //Create
         {
@@ -57,8 +55,6 @@ namespace CHUSHKA.Controllers
 
             return this.RedirectToAction("AdminHome");
         }
-       
-        // [Authorize(Roles = "Administrator")]
         //public IActionResult DeleteProductAdmin(int id) //Delete product
         //{
         //    var model = db.Products.Where(x => id == x.Id).Select(x => new ProductViewModel
@@ -77,7 +73,6 @@ namespace CHUSHKA.Controllers
             db.SaveChanges();
             return this.RedirectToAction("AdminHome");
         }
-        //[Authorize(Roles = "Administrator")]
         public IActionResult AllOrdersAdmin() //All Orders
         {
             var Products = db.Orders.Select(d => new ProductViewModel
@@ -88,12 +83,7 @@ namespace CHUSHKA.Controllers
 
             return View(Products);
         }
-        //[Authorize(Roles = "Administrator")]
 
-
-       
-
-        //[Authorize(Roles = "Administrator")]
         public IActionResult EditAdmin(int id)
         {
             var products = db.Products.Where(x => x.Id == id).FirstOrDefault();
@@ -118,7 +108,7 @@ namespace CHUSHKA.Controllers
             db.SaveChanges();
             return RedirectToAction("AdminHome");
         }
-        
+
         public IActionResult ProductsDetailsAdmin(int id)
         {
             var model = db.Products.Where(x => x.Id == id).Select(s => new ProductViewModel
@@ -126,7 +116,7 @@ namespace CHUSHKA.Controllers
                 Name = s.Name,
                 Price = s.Price,
                 Description = s.Description,
-                ProductType= s.ProductType
+                ProductType = s.ProductType
             }).FirstOrDefault();
             return View(model);
         }
