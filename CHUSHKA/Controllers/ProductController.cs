@@ -81,7 +81,7 @@ namespace CHUSHKA.Controllers
                 OrderDTime = d.OrderOn,
             }).ToList();
 
-            return View(Products);
+            return this.View(Products);
         }
 
         public IActionResult EditAdmin(int id)
