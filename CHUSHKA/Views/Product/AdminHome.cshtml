@@ -19,11 +19,13 @@
             </div>
             <hr class="hr-2 bg-dark" />
             <div class="container-fluid product-holder">
-                <div class="row d-flex justify-content-around">
+             <div class="row d-flex justify-content-around">
                     
                         @foreach (var item in @Model)
                         {
-                        <div class="product col-md-2 chushka-bg-color rounded-top rounded-bottom">
+                            
+                          <div class="product col-md-2 chushka-bg-color rounded-top rounded-bottom">
+                                @*
                             <h5 class="text-center mt-3">@item.Name</h5>
                             <hr class="hr-1 bg-white" />
                             <p class="text-white text-center">
@@ -31,11 +33,19 @@
                             </p>
                             <hr class="hr-1 bg-white" />
                             <h6 class="text-center text-white mb-3">@item.Price</h6>
-                                @*NApravi go s bootstrap card!!!!!!*@
-                        </div>
-                    }
-                        
-                </div>
+                            
+                                NApravi go s bootstrap card!!!!!!*@
+                                <div class="card" style="width: 18rem;>
+                                    <div class="card-body">
+                                        <h5 class="card-title">@item.Name</h5>
+                                        <p class="card-text" >@item.Description</p>
+                                        <p class="card text">@item.Price</p>
+                                        <a asp-action="EditAdmin" asp-controller="Product" asp-route-id="@item.Id">edit product</a>
+                                        <a asp-action="ProductsDetailsAdmin" asp-controller="Product" asp-route-id="@item.Id">Product details</a>
+                                    </div>
+                                </div>
+                        }
+                 </div>
             </div>
         </main>
         <footer>

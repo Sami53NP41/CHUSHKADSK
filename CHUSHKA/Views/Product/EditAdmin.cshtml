@@ -45,7 +45,11 @@
                 <hr class="hr-2 bg-dark half-width mt-4" />
                 <div class="button-holder mt-2 d-flex w-25 mx-auto justify-content-between">
                     <button type="submit" class="btn chushka-bg-color">Edit</button>
-                    <button type="submit" class="btn chushka-bg-color" href="/Product/AdminHome">Cancel</button>
+
+                    <button type="submit" class="btn chushka-bg-color" >Cancel</button>
+                    
+                        <button type="submit" class="btn chushka-bg-color" asp-controller="Product" asp-action="DeleteButton" asp-route-id="@Model.Id">Delete</button>
+                    
                 </div>
             </form>
         </main>

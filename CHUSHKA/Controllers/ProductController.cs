@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Cryptography;
 
 namespace CHUSHKA.Controllers
-{ 
+{
     public class ProductController : Controller
     {
 
@@ -28,7 +28,7 @@ namespace CHUSHKA.Controllers
                 Description = d.Description,
                 Price = d.Price,
             }).ToList();
-            
+
             return View(Products);
 
         }
@@ -57,30 +57,19 @@ namespace CHUSHKA.Controllers
 
             return this.RedirectToAction("AdminHome");
         }
-        //[Authorize(Roles = "Administrator")]
-        public IActionResult ProductDetailsAdmin(int id)
-        {
-            var model = db.Products.Where(x => id == x.Id).Select(x => new ProductViewModel
-            {
-                Name = x.Name,
-                Description = x.Description,
-                Price = x.Price,
-                ProductType = x.ProductType
-            }).FirstOrDefault();
-            return this.View(model);
-        }
-       // [Authorize(Roles = "Administrator")]
-        public IActionResult DeleteProductAdmin(int id) //Delete product
-        {
-            var model = db.Products.Where(x => id == x.Id).Select(x => new ProductViewModel
-            {
-                Name = x.Name,
-                Description = x.Description,
-                Price = x.Price,
-                ProductType = x.ProductType
-            }).FirstOrDefault();
-            return this.View(model);
-        }
+       
+        // [Authorize(Roles = "Administrator")]
+        //public IActionResult DeleteProductAdmin(int id) //Delete product
+        //{
+        //    var model = db.Products.Where(x => id == x.Id).Select(x => new ProductViewModel
+        //    {
+        //        Name = x.Name,
+        //        Description = x.Description,
+        //        Price = x.Price,
+        //        ProductType = x.ProductType
+        //    }).FirstOrDefault();
+        //    return this.View(model);
+        //}
         public IActionResult DeleteButton(int id) //Delete product button
         {
             var product = db.Products.Where(s => s.Id == id).FirstOrDefault();
@@ -94,7 +83,7 @@ namespace CHUSHKA.Controllers
             var Products = db.Orders.Select(d => new ProductViewModel
             {
                 OrderID = d.Id,
-                OrderDTime = d.OrderOn,              
+                OrderDTime = d.OrderOn,
             }).ToList();
 
             return View(Products);
@@ -102,22 +91,44 @@ namespace CHUSHKA.Controllers
         //[Authorize(Roles = "Administrator")]
 
 
-        [HttpPost]
+       
 
         //[Authorize(Roles = "Administrator")]
-        public IActionResult EditAdmin(ProductViewModel model) //Update
+        public IActionResult EditAdmin(int id)
         {
-            var product = db.Products.Where(x => x.Id == model.Id).FirstOrDefault();
-            product.Name = model.Name;
-            product.Description = model.Description;
-            product.Price = model.Price;
-            product.ProductType = model.ProductType;
+            var products = db.Products.Where(x => x.Id == id).FirstOrDefault();
+            var model = new ProductViewModel
+            {
+                Id = products.Id,
+                Name = products.Name,
+                Price = products.Price,
+                Description = products.Description,
+                ProductType = products.ProductType,
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult EditAdmin(ProductViewModel model)
+        {
+            var products = db.Products.Where(x => x.Id == model.Id).FirstOrDefault();
+            products.Name = model.Name;
+            products.Price = model.Price;
+            products.Description = model.Description;
+            products.ProductType = model.ProductType;
             db.SaveChanges();
             return RedirectToAction("AdminHome");
-        
         }
-
         
+        public IActionResult ProductsDetailsAdmin(int id)
+        {
+            var model = db.Products.Where(x => x.Id == id).Select(s => new ProductViewModel
+            {
+                Name = s.Name,
+                Price = s.Price,
+                Description = s.Description,
+                ProductType= s.ProductType
+            }).FirstOrDefault();
+            return View(model);
+        }
     }
-     
 }
